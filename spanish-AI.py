@@ -3,8 +3,8 @@ import openai
 from gtts import gTTS
 import os
 
-# OpenAI API Key Setup
-openai.api_key = "your_openai_api_key"
+# Load OpenAI API Key from Secrets File
+openai.api_key = st.secrets["openai_api_key"]
 
 # Function to Get Phonetic Transcription and Explanation
 def get_phonetic_transcription(spanish_text):
