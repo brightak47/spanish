@@ -1,4 +1,5 @@
 streamlit
 openai
 gTTS
-git+https://github.com/BoseCorp/py-googletrans.git
+deep-translator
+
