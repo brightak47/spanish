@@ -2,13 +2,13 @@ import streamlit as st
 import openai
 from gtts import gTTS
 import os
-from googletrans import Translator
+from google_trans_new import google_translator
 
 # Load OpenAI API Key from Secrets File
-openai.api_key = st.secrets["openai_api_key"]
+openai.api_key = st.secrets["openai"]["openai_api_key"]
 
 # Translator Setup
-translator = Translator()
+translator = google_translator()
 
 # Function to Get Phonetic Transcription and Explanation
 def get_phonetic_transcription(spanish_text):
@@ -37,9 +37,9 @@ input_text = st.text_input("Enter English word or Spanish text:", "")
 
 if input_text:
     # Translate English to Spanish if needed
-    detected_language = translator.detect(input_text).lang
+    detected_language = translator.detect(input_text)[0]
     if detected_language == "en":
-        spanish_text = translator.translate(input_text, src="en", dest="es").text
+        spanish_text = translator.translate(input_text, lang_tgt="es")
         st.write(f"### Translated Text: {spanish_text}")
     else:
         spanish_text = input_text
