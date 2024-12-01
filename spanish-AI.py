@@ -22,7 +22,7 @@ def get_phonetic_transcription(spanish_text):
         max_tokens=300,
         temperature=0.7
     )
-    return response['choices'][0]['message']['content'].strip()
+    return response["choices"][0]["message"]["content"].strip()
 
 # Function to Generate Audio for Text
 def text_to_speech(spanish_text):
