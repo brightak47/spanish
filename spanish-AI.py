@@ -30,19 +30,15 @@ def text_to_speech(spanish_text):
 
 # Streamlit Web App Setup
 st.title("Spanish Phonetics Tool")
-st.write("Enter an English word or Spanish text to get its Spanish translation, phonetic transcription, and audio pronunciation.")
+st.write("Enter an English word or phrase to get its Spanish translation, phonetic transcription, and audio pronunciation.")
 
 # Text Input
-input_text = st.text_input("Enter English word or Spanish text:", "")
+input_text = st.text_input("Enter English text:", "")
 
 if input_text:
-    # Translate English to Spanish if needed
-    detected_language = translator.detect_language(input_text)
-    if detected_language == "en":
-        spanish_text = translator.translate(source="en", target="es", text=input_text)
-        st.write(f"### Translated Text: {spanish_text}")
-    else:
-        spanish_text = input_text
+    # Translate English to Spanish
+    spanish_text = translator.translate(input_text, source="en", target="es")
+    st.write(f"### Translated Text: {spanish_text}")
 
     # Get Phonetic Transcription and Explanation
     st.write("### Phonetic Transcription and Explanation")
