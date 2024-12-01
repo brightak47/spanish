@@ -4,7 +4,6 @@ from gtts import gTTS
 import os
 import tempfile
 from deep_translator import GoogleTranslator
-from openai.error import OpenAIError
 from deep_translator.exceptions import TranslationNotFound
 
 # Load OpenAI API Key from Secrets File
@@ -26,7 +25,7 @@ def get_phonetic_transcription(spanish_text):
             ]
         )
         return response["choices"][0]["message"]["content"].strip()
-    except OpenAIError as e:
+    except openai.OpenAIError as e:
         st.error(f"OpenAI API error: {e}")
         return ""
 
@@ -63,7 +62,7 @@ if input_text:
 
     except TranslationNotFound as e:
         st.error(f"Translation error: {e}")
-    except OpenAIError as e:
+    except openai.OpenAIError as e:
         st.error(f"OpenAI API error: {e}")
     except Exception as e:
         st.error(f"An unexpected error occurred: {e}")
