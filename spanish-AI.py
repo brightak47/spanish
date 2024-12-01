@@ -13,13 +13,16 @@ translator = GoogleTranslator()
 # Function to Get Phonetic Transcription and Explanation
 def get_phonetic_transcription(spanish_text):
     prompt = f"Provide the International Phonetic Alphabet (IPA) transcription for the following Spanish text, with an explanation of each sound:\n\nText: {spanish_text}"
-    response = openai.Completion.create(
-        engine="text-davinci-003",
-        prompt=prompt,
+    response = openai.ChatCompletion.create(
+        model="gpt-4",  # Use "gpt-3.5-turbo" if you don't have access to GPT-4
+        messages=[
+            {"role": "system", "content": "You are a helpful assistant that provides phonetic transcriptions in IPA and detailed explanations."},
+            {"role": "user", "content": prompt}
+        ],
         max_tokens=200,
         temperature=0.7
     )
-    return response.choices[0].text.strip()
+    return response['choices'][0]['message']['content'].strip()
 
 # Function to Generate Audio for Text
 def text_to_speech(spanish_text):
