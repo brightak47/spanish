@@ -18,9 +18,7 @@ def get_phonetic_transcription(spanish_text):
         messages=[
             {"role": "system", "content": "You are a helpful assistant that provides phonetic transcriptions in IPA and detailed explanations."},
             {"role": "user", "content": prompt}
-        ],
-        max_tokens=300,
-        temperature=0.7
+        ]
     )
     return response["choices"][0]["message"]["content"].strip()
 
