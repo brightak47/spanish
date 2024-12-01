@@ -19,7 +19,7 @@ def get_phonetic_transcription(spanish_text):
             {"role": "system", "content": "You are a helpful assistant that provides phonetic transcriptions in IPA and detailed explanations."},
             {"role": "user", "content": prompt}
         ],
-        max_tokens=200,
+        max_tokens=300,
         temperature=0.7
     )
     return response['choices'][0]['message']['content'].strip()
@@ -40,19 +40,22 @@ input_text = st.text_input("Enter English text:", "")
 
 if input_text:
     # Translate English to Spanish
-    spanish_text = translator.translate(input_text, source="en", target="es")
-    st.write(f"### Translated Text: {spanish_text}")
+    try:
+        spanish_text = translator.translate(input_text, source="en", target="es")
+        st.write(f"### Translated Text: {spanish_text}")
 
-    # Get Phonetic Transcription and Explanation
-    st.write("### Phonetic Transcription and Explanation")
-    transcription = get_phonetic_transcription(spanish_text)
-    st.text(transcription)
+        # Get Phonetic Transcription and Explanation
+        st.write("### Phonetic Transcription and Explanation")
+        transcription = get_phonetic_transcription(spanish_text)
+        st.text(transcription)
 
-    # Generate and Play Audio
-    st.write("### Audio Pronunciation")
-    audio_file = text_to_speech(spanish_text)
-    audio_bytes = open(audio_file, "rb").read()
-    st.audio(audio_bytes, format="audio/mp3")
+        # Generate and Play Audio
+        st.write("### Audio Pronunciation")
+        audio_file = text_to_speech(spanish_text)
+        audio_bytes = open(audio_file, "rb").read()
+        st.audio(audio_bytes, format="audio/mp3")
 
-    # Clean up audio file after use
-    os.remove(audio_file)
+        # Clean up audio file after use
+        os.remove(audio_file)
+    except Exception as e:
+        st.error(f"An error occurred: {e}")
